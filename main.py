@@ -42,23 +42,41 @@ st.set_page_config(
 )
 
 def cfg(name: str, default: str = "") -> str:
-    """Lê exclusivamente o ambiente carregado do .env local."""
-    return str(os.getenv(name, default) or "").strip()
+    """
+    Lê a configuração nesta ordem:
+    1. Streamlit Secrets (produção / Streamlit Community Cloud)
+    2. Variáveis de ambiente ou arquivo .env local
+    3. Valor padrão
+    """
+    try:
+        if name in st.secrets:
+            value = st.secrets[name]
+            if value is not None and str(value).strip():
+                return str(value).strip()
+    except Exception:
+        # Fora do Streamlit Cloud ou sem secrets.toml configurado.
+        pass
+
+    value = os.getenv(name)
+    if value is not None and str(value).strip():
+        return str(value).strip()
+
+    return str(default or "").strip()
 
 
 SUPABASE_URL = cfg("SUPABASE_URL").rstrip("/")
 
-# O APS principal usa SUPABASE_SECRET_KEY.
-# O dashboard aceita os três nomes para não exigir outro .env.
+# Aceita os nomes usados tanto no Streamlit Secrets quanto no .env local.
+# Prioriza a chave secreta, quando disponível.
 SUPABASE_KEY = (
-    cfg("SUPABASE_ANON_KEY")
-    or cfg("SUPABASE_SECRET_KEY")
+    cfg("SUPABASE_SECRET_KEY")
+    or cfg("SUPABASE_ANON_KEY")
     or cfg("SUPABASE_KEY")
 )
 
 SUPABASE_KEY_SOURCE = (
-    "SUPABASE_ANON_KEY" if cfg("SUPABASE_ANON_KEY")
-    else "SUPABASE_SECRET_KEY" if cfg("SUPABASE_SECRET_KEY")
+    "SUPABASE_SECRET_KEY" if cfg("SUPABASE_SECRET_KEY")
+    else "SUPABASE_ANON_KEY" if cfg("SUPABASE_ANON_KEY")
     else "SUPABASE_KEY" if cfg("SUPABASE_KEY")
     else ""
 )
