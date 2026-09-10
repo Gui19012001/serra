@@ -195,9 +195,9 @@ div[data-testid="stElementContainer"]:has(iframe) {
 }
 
 .saw-row {
-  height:105px;
+  height:108px;
   display:grid;
-  grid-template-columns:145px 430px 280px minmax(0,1fr);
+  grid-template-columns:140px 500px 220px minmax(0,1fr);
   background:linear-gradient(90deg,rgba(11,38,63,.99),rgba(8,30,51,.99));
   border:1px solid var(--line);
   border-radius:8px;
@@ -256,7 +256,7 @@ div[data-testid="stElementContainer"]:has(iframe) {
    ITEM ATUAL
    ========================================================= */
 .current-box {
-  padding:7px 10px 6px;
+  padding:7px 12px 6px;
   border-right:1px solid var(--line-soft);
   overflow:hidden;
 }
@@ -264,7 +264,7 @@ div[data-testid="stElementContainer"]:has(iframe) {
 .current-main {
   display:grid;
   grid-template-columns:minmax(0,1fr) 72px;
-  gap:9px;
+  gap:10px;
 }
 
 .label {
@@ -276,7 +276,7 @@ div[data-testid="stElementContainer"]:has(iframe) {
 }
 
 .current-code {
-  font-size:23px;
+  font-size:25px;
   font-weight:950;
   line-height:1;
   margin-top:2px;
@@ -286,13 +286,15 @@ div[data-testid="stElementContainer"]:has(iframe) {
 }
 
 .current-desc {
-  font-size:9px;
+  font-size:8px;
   font-weight:650;
-  line-height:1.08;
-  color:#deedf7;
+  line-height:1.05;
+  color:#d8e8f3;
   margin-top:3px;
-  height:18px;
+  height:15px;
   overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
 }
 
 .current-time {
@@ -314,18 +316,16 @@ div[data-testid="stElementContainer"]:has(iframe) {
 }
 
 .current-bottom {
-  display:grid;
-  grid-template-columns:1fr 205px;
-  gap:8px;
-  align-items:center;
-  margin-top:4px;
+  display:block;
+  margin-top:5px;
 }
 
 .current-progress {
-  height:6px;
+  height:4px;
   border-radius:5px;
   background:#193e5b;
   overflow:hidden;
+  margin-top:4px;
 }
 .current-progress span {
   height:100%;
@@ -340,25 +340,32 @@ div[data-testid="stElementContainer"]:has(iframe) {
 .current-metrics {
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:4px;
+  gap:6px;
+  margin-top:5px;
 }
 
 .metric {
-  text-align:center;
+  background:rgba(15,49,80,.82);
+  border:1px solid rgba(52,111,151,.62);
+  border-radius:5px;
+  padding:5px 8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
   min-width:0;
 }
 .metric span {
   display:block;
-  font-size:6px;
-  color:#87b5d3;
+  font-size:7px;
+  color:#8ebbd8;
   font-weight:850;
 }
 .metric b {
   display:block;
-  font-size:14px;
+  font-size:17px;
   font-weight:950;
   line-height:1;
-  margin-top:2px;
+  margin-top:0;
 }
 .metric b.saldo { color:var(--yellow); }
 
@@ -366,7 +373,7 @@ div[data-testid="stElementContainer"]:has(iframe) {
    ÚLTIMO CORTE - UM ÚNICO REGISTRO GRANDE
    ========================================================= */
 .lastcut-box {
-  padding:7px 9px;
+  padding:7px 8px;
   border-right:1px solid var(--line-soft);
   display:flex;
   flex-direction:column;
@@ -384,31 +391,31 @@ div[data-testid="stElementContainer"]:has(iframe) {
 
 .lastcut {
   display:grid;
-  grid-template-columns:58px minmax(0,1fr);
-  gap:8px;
+  grid-template-columns:52px minmax(0,1fr);
+  gap:7px;
   align-items:center;
-  min-height:60px;
+  min-height:58px;
   background:rgba(15,50,81,.78);
   border:1px solid rgba(48,111,153,.72);
   border-radius:6px;
-  padding:7px 9px;
+  padding:6px 7px;
   box-sizing:border-box;
 }
 
 .lastcut-time {
-  font-size:17px;
+  font-size:15px;
   font-weight:950;
   color:#63d0ff;
   text-align:center;
   border-right:1px solid var(--line-soft);
-  padding-right:7px;
+  padding-right:6px;
 }
 
 .lastcut-info {
   min-width:0;
 }
 .lastcut-code {
-  font-size:16px;
+  font-size:13px;
   font-weight:950;
   white-space:nowrap;
   overflow:hidden;
@@ -421,7 +428,7 @@ div[data-testid="stElementContainer"]:has(iframe) {
   margin-top:5px;
 }
 .lastcut-total {
-  font-size:20px;
+  font-size:18px;
   font-weight:950;
   color:#fff;
   line-height:1;
@@ -470,7 +477,7 @@ div[data-testid="stElementContainer"]:has(iframe) {
 .queue-row {
   height:34px;
   display:grid;
-  grid-template-columns:24px minmax(0,1fr) 105px;
+  grid-template-columns:24px minmax(0,1fr) 95px;
   gap:8px;
   align-items:center;
   padding:0 10px;
@@ -487,19 +494,19 @@ div[data-testid="stElementContainer"]:has(iframe) {
 }
 
 .queue-code {
-  font-size:17px;
+  font-size:18px;
   font-weight:950;
   color:#ffffff;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
-  letter-spacing:.15px;
+  letter-spacing:.1px;
 }
 
 
 .queue-qty {
   text-align:right;
-  font-size:18px;
+  font-size:19px;
   font-weight:950;
   color:#ffffff;
 }
@@ -515,19 +522,15 @@ div[data-testid="stElementContainer"]:has(iframe) {
 /* 1366px */
 @media (max-width:1400px) {
   .saw-row {
-    grid-template-columns:135px 390px 255px minmax(0,1fr);
+    grid-template-columns:132px 455px 205px minmax(0,1fr);
   }
-  .saw-name { font-size:18px; }
-  .current-code { font-size:20px; }
-  .current-desc { font-size:8px; }
-  .current-bottom { grid-template-columns:1fr 190px; }
-  .queue-row {
-    grid-template-columns:22px minmax(0,1fr) 90px;
-  }
-  .queue-code { font-size:15px; }
-  .queue-qty { font-size:16px; }
-  .lastcut-code { font-size:14px; }
-  .lastcut-total { font-size:18px; }
+  .saw-name { font-size:17px; }
+  .current-code { font-size:22px; }
+  .current-desc { font-size:7.5px; }
+  .queue-code { font-size:16px; }
+  .queue-qty { font-size:17px; }
+  .lastcut-code { font-size:12px; }
+  .lastcut-total { font-size:16px; }
 }
 </style>
 """
@@ -1325,9 +1328,17 @@ def machine_card(s: dict) -> str:
           <div>
             <div class="label">ITEM ATUAL</div>
             <div class="current-code" title="{esc(item)}">{esc(item)}</div>
+
+            <div class="current-metrics">
+              <div class="metric"><span>PRODUZIDO</span><b>{fmt_qty(done)}</b></div>
+              <div class="metric"><span>META</span><b>{meta_value}</b></div>
+              <div class="metric"><span>SALDO</span><b class="saldo">{saldo_value}</b></div>
+            </div>
+
             <div class="current-desc" title="{esc(desc)}">{esc(desc)}</div>
             <span class="origin">{esc(origin)}</span>
           </div>
+
           <div class="current-time">
             <div class="label">INÍCIO</div>
             <b>{esc(start_time)}</b>
@@ -1336,15 +1347,8 @@ def machine_card(s: dict) -> str:
           </div>
         </div>
 
-        <div class="current-bottom">
-          <div class="{progress_class}">
-            <span style="width:{max(0,min(100,pct)):.1f}%"></span>
-          </div>
-          <div class="current-metrics">
-            <div class="metric"><span>PROD.</span><b>{fmt_qty(done)}</b></div>
-            <div class="metric"><span>META</span><b>{meta_value}</b></div>
-            <div class="metric"><span>SALDO</span><b class="saldo">{saldo_value}</b></div>
-          </div>
+        <div class="{progress_class}">
+          <span style="width:{max(0,min(100,pct)):.1f}%"></span>
         </div>
       </div>
 
