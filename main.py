@@ -90,16 +90,15 @@ CSS = r"""
 :root {
   --bg:#061626;
   --panel:#0a2239;
-  --panel2:#0d2a46;
-  --line:#23608d;
-  --line-soft:#17415f;
+  --panel2:#0d2b49;
+  --line:#28668f;
+  --line-soft:#1a4665;
   --text:#f7fbff;
   --muted:#91b9d7;
-  --cyan:#47c6ff;
-  --green:#28e18b;
-  --yellow:#ffca2b;
-  --red:#ff6573;
-  --blue:#2098ff;
+  --cyan:#49c8ff;
+  --green:#2ae28d;
+  --yellow:#ffcd30;
+  --red:#ff6674;
 }
 
 html, body, [class*="css"] {
@@ -108,7 +107,7 @@ html, body, [class*="css"] {
 
 .stApp {
   background:
-    radial-gradient(circle at 50% -18%, rgba(32,152,255,.12), transparent 35%),
+    radial-gradient(circle at 50% -20%, rgba(37,157,255,.12), transparent 34%),
     linear-gradient(180deg,#061424 0%,#071a2d 100%);
   color:var(--text);
 }
@@ -131,153 +130,156 @@ div[data-testid="stElementContainer"]:has(iframe) {
 
 .block-container {
   max-width:100% !important;
-  padding:.12rem .38rem .18rem .38rem !important;
+  padding:.10rem .32rem .14rem .32rem !important;
 }
 
 /* =========================================================
-   CABEÇALHO - MENOR PARA SOBRAR ALTURA PARA AS 5 SERRAS
+   CABEÇALHO COMPACTO
    ========================================================= */
 .tv-header {
   display:grid;
-  grid-template-columns:150px 1fr 160px;
-  height:58px;
+  grid-template-columns:145px 1fr 145px;
+  height:46px;
   align-items:center;
   border-bottom:1px solid var(--line);
-  margin-bottom:5px;
+  margin-bottom:4px;
 }
 
 .brand {
-  font-size:25px;
+  font-size:23px;
   font-weight:950;
   letter-spacing:1px;
-  line-height:.88;
+  line-height:.85;
 }
 .brand small {
   display:block;
-  font-size:7px;
+  font-size:6px;
   letter-spacing:5px;
-  margin-top:6px;
-  color:#e2f0fa;
+  margin-top:5px;
+  color:#e1eff9;
 }
 
 .title { text-align:center; }
 .title h1 {
-  font-size:22px;
+  font-size:21px;
   line-height:1;
   padding:0;
   margin:0;
   font-weight:950;
-  letter-spacing:.25px;
   color:var(--cyan);
 }
 .title p {
-  color:#8bd4fb;
-  margin:5px 0 0;
-  font-size:9px;
-  font-weight:800;
-  letter-spacing:1.35px;
+  color:#94d9ff;
+  margin:4px 0 0;
+  font-size:8px;
+  font-weight:850;
+  letter-spacing:1.25px;
 }
 
 .clock {
   border-left:1px solid var(--line);
-  padding-left:10px;
+  padding-left:9px;
   text-align:center;
 }
-.clock .date { font-size:10px; color:#99dcff; }
-.clock .time { font-size:20px; font-weight:950; margin:1px 0; }
-.clock .week { font-size:7px; color:#b1ccde; }
+.clock .date { font-size:8px; color:#9bddff; }
+.clock .time { font-size:18px; font-weight:950; margin:0; }
+.clock .week { display:none; }
 
 /* =========================================================
-   5 FAIXAS - TODAS NA MESMA TELA
+   CINCO SERRAS - 5 x 105 = 525 px
    ========================================================= */
 .machine-grid {
   display:grid;
   grid-template-columns:1fr;
-  gap:5px;
+  gap:4px;
 }
 
 .saw-row {
-  height:127px;
+  height:105px;
   display:grid;
-  grid-template-columns:145px 390px 300px minmax(0,1fr);
-  background:linear-gradient(90deg,rgba(11,37,62,.99),rgba(8,29,49,.99));
+  grid-template-columns:145px 430px 280px minmax(0,1fr);
+  background:linear-gradient(90deg,rgba(11,38,63,.99),rgba(8,30,51,.99));
   border:1px solid var(--line);
-  border-radius:9px;
+  border-radius:8px;
   overflow:hidden;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
 }
 
 /* =========================================================
-   1. SERRA / STATUS
+   SERRA / STATUS
    ========================================================= */
 .saw-ident {
-  padding:10px 11px;
+  padding:8px 10px;
   display:flex;
   flex-direction:column;
   justify-content:center;
   border-right:1px solid var(--line-soft);
 }
+
 .saw-name-line {
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:5px;
 }
+
 .saw-name {
-  font-size:19px;
+  font-size:20px;
   font-weight:950;
   white-space:nowrap;
 }
+
 .saw-dot {
-  font-size:13px;
+  font-size:12px;
   color:#fff;
 }
 
 .status-pill {
-  margin-top:10px;
+  margin-top:7px;
   width:100%;
   box-sizing:border-box;
   text-align:center;
   border-radius:5px;
-  padding:8px 3px;
+  padding:7px 3px;
   font-size:10px;
   font-weight:950;
   border:1px solid;
 }
-.status-run { background:rgba(40,225,139,.14);color:#4af0a0;border-color:#20dd84; }
-.status-setup { background:rgba(255,202,43,.14);color:#ffd75f;border-color:#dca40d; }
-.status-pause { background:rgba(32,152,255,.15);color:#7cd0ff;border-color:#2698e6; }
-.status-wait { background:rgba(125,164,194,.14);color:#edf7fd;border-color:#638aa7; }
-.status-off { background:rgba(255,101,115,.13);color:#ff939d;border-color:#ee5967; }
+
+.status-run { background:rgba(42,226,141,.15);color:#4df0a3;border-color:#20dd84; }
+.status-setup { background:rgba(255,205,48,.15);color:#ffd964;border-color:#dba50d; }
+.status-pause { background:rgba(32,152,255,.16);color:#7bd1ff;border-color:#2799e7; }
+.status-wait { background:rgba(129,170,200,.15);color:#f2f9fd;border-color:#668ba7; }
+.status-off { background:rgba(255,102,116,.14);color:#ff929c;border-color:#ef5968; }
 
 /* =========================================================
-   2. ITEM ATUAL + NÚMEROS
+   ITEM ATUAL
    ========================================================= */
 .current-box {
-  padding:9px 11px 8px;
+  padding:7px 10px 6px;
   border-right:1px solid var(--line-soft);
   overflow:hidden;
 }
 
-.current-top {
+.current-main {
   display:grid;
-  grid-template-columns:minmax(0,1fr) 66px;
+  grid-template-columns:minmax(0,1fr) 72px;
   gap:9px;
 }
 
 .label {
-  font-size:8px;
-  color:#83b7dc;
+  font-size:7px;
+  color:#8fc2e4;
+  font-weight:850;
   text-transform:uppercase;
   letter-spacing:.45px;
-  font-weight:800;
 }
 
 .current-code {
-  font-size:21px;
+  font-size:23px;
   font-weight:950;
-  line-height:1.02;
-  margin-top:3px;
+  line-height:1;
+  margin-top:2px;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -285,10 +287,11 @@ div[data-testid="stElementContainer"]:has(iframe) {
 
 .current-desc {
   font-size:9px;
-  line-height:1.15;
-  color:#e0eef7;
-  margin-top:4px;
-  height:21px;
+  font-weight:650;
+  line-height:1.08;
+  color:#deedf7;
+  margin-top:3px;
+  height:18px;
   overflow:hidden;
 }
 
@@ -298,179 +301,192 @@ div[data-testid="stElementContainer"]:has(iframe) {
 }
 .current-time b {
   display:block;
-  font-size:12px;
-  margin:2px 0 5px;
+  font-size:13px;
+  margin:1px 0 4px;
 }
 
 .origin {
   display:inline-block;
-  margin-top:2px;
-  font-size:7px;
+  margin-top:1px;
+  font-size:6.5px;
   font-weight:950;
   color:var(--yellow);
 }
 
+.current-bottom {
+  display:grid;
+  grid-template-columns:1fr 205px;
+  gap:8px;
+  align-items:center;
+  margin-top:4px;
+}
+
 .current-progress {
-  height:5px;
-  margin-top:5px;
+  height:6px;
   border-radius:5px;
-  background:#183c59;
+  background:#193e5b;
   overflow:hidden;
 }
 .current-progress span {
   height:100%;
   display:block;
-  background:linear-gradient(90deg,#28df89,#55efa4);
+  background:linear-gradient(90deg,#28e08a,#56f0a6);
   border-radius:5px;
 }
 .current-progress.avulsa span {
-  background:linear-gradient(90deg,#ffb917,#ffe06a);
+  background:linear-gradient(90deg,#ffbc19,#ffe16c);
 }
 
 .current-metrics {
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:6px;
-  margin-top:6px;
+  gap:4px;
 }
-.current-metric {
-  background:rgba(15,48,78,.82);
-  border:1px solid rgba(52,111,151,.55);
-  border-radius:5px;
-  padding:5px 7px;
-  display:flex;
-  align-items:baseline;
-  justify-content:space-between;
+
+.metric {
+  text-align:center;
   min-width:0;
 }
-.current-metric span {
-  font-size:7px;
-  color:#8ab5d3;
-  font-weight:800;
+.metric span {
+  display:block;
+  font-size:6px;
+  color:#87b5d3;
+  font-weight:850;
 }
-.current-metric b {
-  font-size:13px;
+.metric b {
+  display:block;
+  font-size:14px;
   font-weight:950;
+  line-height:1;
+  margin-top:2px;
 }
-.current-metric b.saldo { color:var(--yellow); }
+.metric b.saldo { color:var(--yellow); }
 
 /* =========================================================
-   3. ÚLTIMOS CORTES - TOTALIZADOS
+   ÚLTIMO CORTE - UM ÚNICO REGISTRO GRANDE
    ========================================================= */
-.history-box {
-  padding:8px 9px;
+.lastcut-box {
+  padding:7px 9px;
   border-right:1px solid var(--line-soft);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
   min-width:0;
 }
 
-.box-head {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:7px;
-}
-.box-head strong {
-  font-size:10px;
-  color:#d6efff;
-  letter-spacing:.4px;
-}
-.box-head span {
-  font-size:7px;
-  color:#83adca;
-}
-
-.history-list {
-  display:grid;
-  grid-template-rows:repeat(2,1fr);
-  gap:6px;
-}
-
-.hist-row {
-  height:39px;
-  display:grid;
-  grid-template-columns:54px minmax(0,1fr) 76px;
-  gap:6px;
-  align-items:center;
-  padding:0 8px;
-  background:rgba(14,49,80,.78);
-  border:1px solid rgba(42,103,146,.68);
-  border-radius:5px;
-}
-
-.hist-time {
-  font-size:13px;
+.box-title {
+  font-size:9px;
+  color:#d8f0ff;
   font-weight:950;
-  color:#5dcdff;
+  letter-spacing:.4px;
+  margin-bottom:6px;
 }
 
-.hist-code {
-  font-size:12px;
+.lastcut {
+  display:grid;
+  grid-template-columns:58px minmax(0,1fr);
+  gap:8px;
+  align-items:center;
+  min-height:60px;
+  background:rgba(15,50,81,.78);
+  border:1px solid rgba(48,111,153,.72);
+  border-radius:6px;
+  padding:7px 9px;
+  box-sizing:border-box;
+}
+
+.lastcut-time {
+  font-size:17px;
+  font-weight:950;
+  color:#63d0ff;
+  text-align:center;
+  border-right:1px solid var(--line-soft);
+  padding-right:7px;
+}
+
+.lastcut-info {
+  min-width:0;
+}
+.lastcut-code {
+  font-size:16px;
   font-weight:950;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
-
-.hist-total {
-  text-align:right;
-  line-height:1.05;
+.lastcut-total-label {
+  font-size:7px;
+  color:#90b8d4;
+  font-weight:850;
+  margin-top:5px;
 }
-.hist-total span {
-  display:block;
-  font-size:6.5px;
-  color:#82abc8;
-  font-weight:800;
-}
-.hist-total b {
-  display:block;
-  font-size:14px;
-  color:#fff;
+.lastcut-total {
+  font-size:20px;
   font-weight:950;
-  margin-top:2px;
+  color:#fff;
+  line-height:1;
+  margin-top:1px;
 }
 
-.hist-empty {
+.lastcut-empty {
   grid-column:1/-1;
   text-align:center;
-  color:#789bb4;
-  font-size:9px;
-  font-weight:700;
+  color:#8aaac0;
+  font-size:10px;
+  font-weight:800;
 }
 
 /* =========================================================
-   4. FILA - 3 PRÓXIMOS, PRIORIDADE PARA CÓDIGO
+   FILA - APENAS 2 PRÓXIMOS, FONTE GRANDE
    ========================================================= */
 .queue-box {
-  padding:8px 9px;
+  padding:7px 9px;
   min-width:0;
+}
+
+.queue-title {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:5px;
+}
+.queue-title strong {
+  font-size:9px;
+  color:#d8f0ff;
+  font-weight:950;
+  letter-spacing:.4px;
+}
+.queue-title span {
+  font-size:7px;
+  color:#87aec9;
 }
 
 .queue-list {
   display:grid;
-  grid-template-rows:repeat(3,1fr);
+  grid-template-rows:repeat(2,1fr);
   gap:5px;
 }
 
 .queue-row {
-  height:27px;
+  height:34px;
   display:grid;
-  grid-template-columns:18px 155px minmax(0,1fr) 56px;
-  gap:5px;
+  grid-template-columns:22px 175px minmax(0,1fr) 65px;
+  gap:6px;
   align-items:center;
-  padding:0 7px;
-  background:rgba(14,47,77,.7);
-  border:1px solid rgba(40,94,133,.65);
-  border-radius:4px;
+  padding:0 8px;
+  background:rgba(14,48,78,.74);
+  border:1px solid rgba(43,100,140,.70);
+  border-radius:5px;
 }
 
 .queue-pos {
-  font-size:9px;
+  font-size:11px;
   font-weight:950;
-  color:#57c9ff;
+  color:#5dcdff;
 }
 
 .queue-code {
-  font-size:11px;
+  font-size:14px;
   font-weight:950;
   color:#fff;
   white-space:nowrap;
@@ -479,8 +495,8 @@ div[data-testid="stElementContainer"]:has(iframe) {
 }
 
 .queue-desc {
-  font-size:8px;
-  color:#c3dcec;
+  font-size:9px;
+  color:#c9deec;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -488,7 +504,7 @@ div[data-testid="stElementContainer"]:has(iframe) {
 
 .queue-qty {
   text-align:right;
-  font-size:11px;
+  font-size:15px;
   font-weight:950;
   color:#fff;
 }
@@ -496,27 +512,28 @@ div[data-testid="stElementContainer"]:has(iframe) {
 .queue-empty {
   grid-column:1/-1;
   text-align:center;
-  font-size:8px;
-  color:#799cb6;
-  font-weight:700;
+  font-size:10px;
+  color:#83a5bc;
+  font-weight:750;
 }
 
-/* =========================================================
-   1366px / TV menor
-   ========================================================= */
+/* 1366px */
 @media (max-width:1400px) {
   .saw-row {
-    grid-template-columns:135px 355px 280px minmax(0,1fr);
+    grid-template-columns:135px 390px 255px minmax(0,1fr);
   }
-  .saw-name { font-size:17px; }
-  .current-code { font-size:18px; }
+  .saw-name { font-size:18px; }
+  .current-code { font-size:20px; }
   .current-desc { font-size:8px; }
+  .current-bottom { grid-template-columns:1fr 190px; }
   .queue-row {
-    grid-template-columns:16px 125px minmax(0,1fr) 50px;
+    grid-template-columns:20px 140px minmax(0,1fr) 56px;
   }
-  .queue-code { font-size:9.5px; }
-  .queue-desc { font-size:7px; }
-  .hist-code { font-size:10px; }
+  .queue-code { font-size:12px; }
+  .queue-desc { font-size:8px; }
+  .queue-qty { font-size:13px; }
+  .lastcut-code { font-size:14px; }
+  .lastcut-total { font-size:18px; }
 }
 </style>
 """
@@ -992,7 +1009,7 @@ def machine_summary(machine: str, payload: dict, std_map: dict, now: datetime, p
     queue = payload.get("queue") or {}
     hist = history_today(payload.get("history") or [], prod_date)
     cur = current_order(queue)
-    nxt = next_queue(queue, cur, 3)
+    nxt = next_queue(queue, cur, 2)
 
     # Métrica do DIA: usada somente no resumo geral.
     day_metrics = execution_metrics(hist, machine, std_map, now)
@@ -1157,40 +1174,37 @@ def completed_cut_groups(rows: list[dict]) -> list[dict]:
 
 
 def machine_history_html(rows: list[dict]) -> str:
-    cuts = completed_cut_groups(rows)[:2]
+    cuts = completed_cut_groups(rows)[:1]
 
-    out = []
-    for cut in cuts:
-        dt = cut["fim_em"]
-        code = str(cut.get("codigo_item") or "—")
-        total = fnum(cut.get("total"))
-
-        out.append(
-            "<div class='hist-row'>"
-            f"<div class='hist-time'>{dt:%H:%M}</div>"
-            f"<div class='hist-code' title='{esc(code)}'>{esc(code)}</div>"
-            "<div class='hist-total'>"
-            "<span>TOTAL</span>"
-            f"<b>{fmt_qty(total)} pç</b>"
-            "</div>"
+    if not cuts:
+        return (
+            "<div class='lastcut'>"
+            "<div class='lastcut-empty'>SEM CORTE FINALIZADO</div>"
             "</div>"
         )
 
-    while len(out) < 2:
-        out.append(
-            "<div class='hist-row'>"
-            "<div class='hist-empty'>SEM CORTE FINALIZADO</div>"
-            "</div>"
-        )
+    cut = cuts[0]
+    dt = cut["fim_em"]
+    code = str(cut.get("codigo_item") or "—")
+    total = fnum(cut.get("total"))
 
-    return "<div class='history-list'>" + "".join(out) + "</div>"
+    return (
+        "<div class='lastcut'>"
+        f"<div class='lastcut-time'>{dt:%H:%M}</div>"
+        "<div class='lastcut-info'>"
+        f"<div class='lastcut-code' title='{esc(code)}'>{esc(code)}</div>"
+        "<div class='lastcut-total-label'>TOTAL CORTADO</div>"
+        f"<div class='lastcut-total'>{fmt_qty(total)} pç</div>"
+        "</div>"
+        "</div>"
+    )
 
 
 
 def compact_queue_html(rows: list[dict]) -> str:
     out = []
 
-    for i, x in enumerate((rows or [])[:3], 1):
+    for i, x in enumerate((rows or [])[:2], 1):
         code = str(x.get("item") or "—")
         desc = str(x.get("description") or "SEM DESCRIÇÃO")
         qty = max(0, fnum(x.get("planned_qty")) - fnum(x.get("done_qty")))
@@ -1204,7 +1218,7 @@ def compact_queue_html(rows: list[dict]) -> str:
             "</div>"
         )
 
-    while len(out) < 3:
+    while len(out) < 2:
         out.append(
             "<div class='queue-row'>"
             "<div class='queue-empty'>SEM PRÓXIMO ITEM</div>"
@@ -1313,7 +1327,7 @@ def machine_card(s: dict) -> str:
       </div>
 
       <div class="current-box">
-        <div class="current-top">
+        <div class="current-main">
           <div>
             <div class="label">ITEM ATUAL</div>
             <div class="current-code" title="{esc(item)}">{esc(item)}</div>
@@ -1328,29 +1342,27 @@ def machine_card(s: dict) -> str:
           </div>
         </div>
 
-        <div class="{progress_class}">
-          <span style="width:{max(0,min(100,pct)):.1f}%"></span>
-        </div>
-
-        <div class="current-metrics">
-          <div class="current-metric"><span>PRODUZIDO</span><b>{fmt_qty(done)}</b></div>
-          <div class="current-metric"><span>META</span><b>{meta_value}</b></div>
-          <div class="current-metric"><span>SALDO</span><b class="saldo">{saldo_value}</b></div>
+        <div class="current-bottom">
+          <div class="{progress_class}">
+            <span style="width:{max(0,min(100,pct)):.1f}%"></span>
+          </div>
+          <div class="current-metrics">
+            <div class="metric"><span>PROD.</span><b>{fmt_qty(done)}</b></div>
+            <div class="metric"><span>META</span><b>{meta_value}</b></div>
+            <div class="metric"><span>SALDO</span><b class="saldo">{saldo_value}</b></div>
+          </div>
         </div>
       </div>
 
-      <div class="history-box">
-        <div class="box-head">
-          <strong>ÚLTIMOS CORTES</strong>
-          <span>HORA FINAL · TOTAL</span>
-        </div>
+      <div class="lastcut-box">
+        <div class="box-title">ÚLTIMO CORTE</div>
         {machine_history_html(s["history"])}
       </div>
 
       <div class="queue-box">
-        <div class="box-head">
+        <div class="queue-title">
           <strong>PRÓXIMOS DA FILA</strong>
-          <span>1 → 3</span>
+          <span>1 → 2</span>
         </div>
         {compact_queue_html(s["next"])}
       </div>
@@ -1496,7 +1508,7 @@ header = f"""
   <div class="brand">IBERO<small>GROUP</small></div>
   <div class="title">
     <h1>APS SERRA <span>– MONITORAMENTO EM TEMPO REAL</span></h1>
-    <p>ITEM ATUAL • ÚLTIMO CORTE TOTAL • FILA</p>
+    <p>ITEM ATUAL • ÚLTIMO CORTE • PRÓXIMOS</p>
   </div>
   <div class="clock">
     <div class="date">{now:%d/%m/%Y}</div>
