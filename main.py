@@ -42,41 +42,23 @@ st.set_page_config(
 )
 
 def cfg(name: str, default: str = "") -> str:
-    """
-    Lê a configuração nesta ordem:
-    1. Streamlit Secrets (produção / Streamlit Community Cloud)
-    2. Variáveis de ambiente ou arquivo .env local
-    3. Valor padrão
-    """
-    try:
-        if name in st.secrets:
-            value = st.secrets[name]
-            if value is not None and str(value).strip():
-                return str(value).strip()
-    except Exception:
-        # Fora do Streamlit Cloud ou sem secrets.toml configurado.
-        pass
-
-    value = os.getenv(name)
-    if value is not None and str(value).strip():
-        return str(value).strip()
-
-    return str(default or "").strip()
+    """Lê exclusivamente o ambiente carregado do .env local."""
+    return str(os.getenv(name, default) or "").strip()
 
 
 SUPABASE_URL = cfg("SUPABASE_URL").rstrip("/")
 
-# Aceita os nomes usados tanto no Streamlit Secrets quanto no .env local.
-# Prioriza a chave secreta, quando disponível.
+# O APS principal usa SUPABASE_SECRET_KEY.
+# O dashboard aceita os três nomes para não exigir outro .env.
 SUPABASE_KEY = (
-    cfg("SUPABASE_SECRET_KEY")
-    or cfg("SUPABASE_ANON_KEY")
+    cfg("SUPABASE_ANON_KEY")
+    or cfg("SUPABASE_SECRET_KEY")
     or cfg("SUPABASE_KEY")
 )
 
 SUPABASE_KEY_SOURCE = (
-    "SUPABASE_SECRET_KEY" if cfg("SUPABASE_SECRET_KEY")
-    else "SUPABASE_ANON_KEY" if cfg("SUPABASE_ANON_KEY")
+    "SUPABASE_ANON_KEY" if cfg("SUPABASE_ANON_KEY")
+    else "SUPABASE_SECRET_KEY" if cfg("SUPABASE_SECRET_KEY")
     else "SUPABASE_KEY" if cfg("SUPABASE_KEY")
     else ""
 )
@@ -109,14 +91,14 @@ CSS = r"""
   --bg:#061626;
   --panel:#0a2239;
   --panel2:#0d2a46;
-  --line:#1d4e73;
-  --line-soft:#173b59;
-  --text:#f4f8fc;
-  --muted:#82a9c8;
-  --cyan:#42c2ff;
-  --green:#28df88;
-  --yellow:#ffc326;
-  --red:#ff5f6d;
+  --line:#23608d;
+  --line-soft:#17415f;
+  --text:#f7fbff;
+  --muted:#91b9d7;
+  --cyan:#47c6ff;
+  --green:#28e18b;
+  --yellow:#ffca2b;
+  --red:#ff6573;
   --blue:#2098ff;
 }
 
@@ -126,7 +108,7 @@ html, body, [class*="css"] {
 
 .stApp {
   background:
-    radial-gradient(circle at 50% -15%, rgba(32,152,255,.11), transparent 36%),
+    radial-gradient(circle at 50% -18%, rgba(32,152,255,.12), transparent 35%),
     linear-gradient(180deg,#061424 0%,#071a2d 100%);
   color:var(--text);
 }
@@ -149,62 +131,64 @@ div[data-testid="stElementContainer"]:has(iframe) {
 
 .block-container {
   max-width:100% !important;
-  padding:.15rem .4rem .2rem .4rem !important;
+  padding:.12rem .38rem .18rem .38rem !important;
 }
 
 /* =========================================================
-   CABEÇALHO
+   CABEÇALHO - MENOR PARA SOBRAR ALTURA PARA AS 5 SERRAS
    ========================================================= */
 .tv-header {
   display:grid;
-  grid-template-columns:165px 1fr 170px;
-  height:64px;
+  grid-template-columns:150px 1fr 160px;
+  height:58px;
   align-items:center;
   border-bottom:1px solid var(--line);
   margin-bottom:5px;
 }
 
 .brand {
-  font-size:24px;
+  font-size:25px;
   font-weight:950;
   letter-spacing:1px;
-  line-height:.9;
+  line-height:.88;
 }
 .brand small {
   display:block;
   font-size:7px;
   letter-spacing:5px;
-  margin-top:7px;
-  color:#dcebf6;
+  margin-top:6px;
+  color:#e2f0fa;
 }
 
 .title { text-align:center; }
 .title h1 {
-  font-size:21px;
+  font-size:22px;
   line-height:1;
   padding:0;
   margin:0;
-  letter-spacing:.3px;
+  font-weight:950;
+  letter-spacing:.25px;
   color:var(--cyan);
 }
 .title p {
-  color:#76c9f8;
-  margin:6px 0 0;
-  font-size:8px;
-  letter-spacing:1.4px;
+  color:#8bd4fb;
+  margin:5px 0 0;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:1.35px;
 }
 
 .clock {
   border-left:1px solid var(--line);
-  padding-left:12px;
+  padding-left:10px;
   text-align:center;
 }
-.clock .date { font-size:9px; color:#8bd5ff; }
-.clock .time { font-size:19px; font-weight:950; margin:2px 0; }
-.clock .week { font-size:6.8px; color:#a9c4da; }
+.clock .date { font-size:10px; color:#99dcff; }
+.clock .time { font-size:20px; font-weight:950; margin:1px 0; }
+.clock .week { font-size:7px; color:#b1ccde; }
 
 /* =========================================================
-   5 FAIXAS
+   5 FAIXAS - TODAS NA MESMA TELA
    ========================================================= */
 .machine-grid {
   display:grid;
@@ -213,21 +197,21 @@ div[data-testid="stElementContainer"]:has(iframe) {
 }
 
 .saw-row {
-  height:122px;
+  height:127px;
   display:grid;
-  grid-template-columns:138px 395px 330px minmax(0,1fr);
-  background:linear-gradient(90deg,rgba(10,34,57,.99),rgba(8,29,49,.99));
+  grid-template-columns:145px 390px 300px minmax(0,1fr);
+  background:linear-gradient(90deg,rgba(11,37,62,.99),rgba(8,29,49,.99));
   border:1px solid var(--line);
   border-radius:9px;
   overflow:hidden;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
 }
 
 /* =========================================================
-   SERRA / STATUS
+   1. SERRA / STATUS
    ========================================================= */
 .saw-ident {
-  padding:9px 10px;
+  padding:10px 11px;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -240,254 +224,299 @@ div[data-testid="stElementContainer"]:has(iframe) {
   gap:5px;
 }
 .saw-name {
-  font-size:17px;
+  font-size:19px;
   font-weight:950;
   white-space:nowrap;
 }
-.saw-dot { font-size:11px; }
+.saw-dot {
+  font-size:13px;
+  color:#fff;
+}
 
 .status-pill {
-  margin-top:8px;
+  margin-top:10px;
   width:100%;
   box-sizing:border-box;
   text-align:center;
   border-radius:5px;
-  padding:6px 3px;
-  font-size:8px;
+  padding:8px 3px;
+  font-size:10px;
   font-weight:950;
   border:1px solid;
 }
-.status-run { background:rgba(40,223,136,.12);color:#43ee9b;border-color:#20d97f; }
-.status-setup { background:rgba(255,195,38,.12);color:#ffd05b;border-color:#d79d08; }
-.status-pause { background:rgba(32,152,255,.13);color:#72c9ff;border-color:#248dd9; }
-.status-wait { background:rgba(118,154,181,.12);color:#e0edf6;border-color:#557995; }
-.status-off { background:rgba(255,95,109,.11);color:#ff8b95;border-color:#f15261; }
+.status-run { background:rgba(40,225,139,.14);color:#4af0a0;border-color:#20dd84; }
+.status-setup { background:rgba(255,202,43,.14);color:#ffd75f;border-color:#dca40d; }
+.status-pause { background:rgba(32,152,255,.15);color:#7cd0ff;border-color:#2698e6; }
+.status-wait { background:rgba(125,164,194,.14);color:#edf7fd;border-color:#638aa7; }
+.status-off { background:rgba(255,101,115,.13);color:#ff939d;border-color:#ee5967; }
 
 /* =========================================================
-   ITEM ATUAL + PRODUÇÃO
+   2. ITEM ATUAL + NÚMEROS
    ========================================================= */
 .current-box {
-  padding:8px 10px 7px;
+  padding:9px 11px 8px;
   border-right:1px solid var(--line-soft);
   overflow:hidden;
 }
+
 .current-top {
   display:grid;
-  grid-template-columns:1fr 58px;
-  gap:8px;
+  grid-template-columns:minmax(0,1fr) 66px;
+  gap:9px;
 }
+
 .label {
-  font-size:6.7px;
-  color:#76acd2;
+  font-size:8px;
+  color:#83b7dc;
   text-transform:uppercase;
   letter-spacing:.45px;
+  font-weight:800;
 }
+
 .current-code {
-  font-size:18px;
+  font-size:21px;
   font-weight:950;
-  line-height:1;
-  margin-top:2px;
+  line-height:1.02;
+  margin-top:3px;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
+
 .current-desc {
-  font-size:7.4px;
-  line-height:1.13;
-  color:#d9eaf5;
-  margin-top:3px;
-  height:17px;
+  font-size:9px;
+  line-height:1.15;
+  color:#e0eef7;
+  margin-top:4px;
+  height:21px;
   overflow:hidden;
 }
+
 .current-time {
   border-left:1px solid var(--line-soft);
-  padding-left:7px;
+  padding-left:8px;
 }
 .current-time b {
   display:block;
-  font-size:10px;
-  margin:1px 0 4px;
+  font-size:12px;
+  margin:2px 0 5px;
 }
+
 .origin {
   display:inline-block;
   margin-top:2px;
-  font-size:6px;
-  font-weight:900;
+  font-size:7px;
+  font-weight:950;
   color:var(--yellow);
 }
 
 .current-progress {
-  height:4px;
-  margin-top:4px;
+  height:5px;
+  margin-top:5px;
   border-radius:5px;
-  background:#173650;
+  background:#183c59;
   overflow:hidden;
 }
 .current-progress span {
   height:100%;
   display:block;
-  background:linear-gradient(90deg,#26dd86,#48ef9d);
+  background:linear-gradient(90deg,#28df89,#55efa4);
   border-radius:5px;
 }
 .current-progress.avulsa span {
-  background:linear-gradient(90deg,#ffb816,#ffda66);
+  background:linear-gradient(90deg,#ffb917,#ffe06a);
 }
 
 .current-metrics {
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:5px;
-  margin-top:5px;
+  gap:6px;
+  margin-top:6px;
 }
 .current-metric {
-  background:rgba(13,42,70,.7);
-  border:1px solid rgba(41,91,126,.45);
-  border-radius:4px;
-  padding:4px 6px;
+  background:rgba(15,48,78,.82);
+  border:1px solid rgba(52,111,151,.55);
+  border-radius:5px;
+  padding:5px 7px;
   display:flex;
   align-items:baseline;
   justify-content:space-between;
   min-width:0;
 }
 .current-metric span {
-  font-size:5.8px;
-  color:#70a7cb;
+  font-size:7px;
+  color:#8ab5d3;
+  font-weight:800;
 }
 .current-metric b {
-  font-size:11px;
+  font-size:13px;
   font-weight:950;
 }
 .current-metric b.saldo { color:var(--yellow); }
 
 /* =========================================================
-   HISTÓRICO
+   3. ÚLTIMOS CORTES - TOTALIZADOS
    ========================================================= */
 .history-box {
-  padding:7px 8px;
+  padding:8px 9px;
   border-right:1px solid var(--line-soft);
   min-width:0;
 }
+
 .box-head {
   display:flex;
   align-items:center;
   justify-content:space-between;
-  margin-bottom:5px;
+  margin-bottom:7px;
 }
 .box-head strong {
-  font-size:8px;
-  color:#cbeaff;
+  font-size:10px;
+  color:#d6efff;
   letter-spacing:.4px;
 }
 .box-head span {
-  font-size:6px;
-  color:#6fa7cc;
+  font-size:7px;
+  color:#83adca;
 }
 
 .history-list {
   display:grid;
-  grid-template-rows:repeat(3,1fr);
-  gap:4px;
+  grid-template-rows:repeat(2,1fr);
+  gap:6px;
 }
+
 .hist-row {
-  height:24px;
+  height:39px;
   display:grid;
-  grid-template-columns:42px minmax(0,1fr) 53px;
-  gap:5px;
+  grid-template-columns:54px minmax(0,1fr) 76px;
+  gap:6px;
   align-items:center;
-  padding:0 6px;
-  background:rgba(14,45,73,.58);
-  border:1px solid rgba(29,78,115,.65);
-  border-radius:4px;
+  padding:0 8px;
+  background:rgba(14,49,80,.78);
+  border:1px solid rgba(42,103,146,.68);
+  border-radius:5px;
 }
+
 .hist-time {
-  font-size:9px;
+  font-size:13px;
   font-weight:950;
-  color:#5fc8ff;
+  color:#5dcdff;
 }
+
 .hist-code {
-  font-size:8.5px;
-  font-weight:900;
+  font-size:12px;
+  font-weight:950;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
-.hist-qty {
+
+.hist-total {
   text-align:right;
-  font-size:9px;
-  font-weight:950;
-  color:#fff;
+  line-height:1.05;
 }
+.hist-total span {
+  display:block;
+  font-size:6.5px;
+  color:#82abc8;
+  font-weight:800;
+}
+.hist-total b {
+  display:block;
+  font-size:14px;
+  color:#fff;
+  font-weight:950;
+  margin-top:2px;
+}
+
 .hist-empty {
   grid-column:1/-1;
   text-align:center;
-  color:#6f94ae;
-  font-size:7px;
+  color:#789bb4;
+  font-size:9px;
+  font-weight:700;
 }
 
 /* =========================================================
-   FILA COMPACTA
+   4. FILA - 3 PRÓXIMOS, PRIORIDADE PARA CÓDIGO
    ========================================================= */
 .queue-box {
-  padding:7px 8px;
+  padding:8px 9px;
   min-width:0;
 }
+
 .queue-list {
   display:grid;
-  grid-template-rows:repeat(4,1fr);
-  gap:3px;
+  grid-template-rows:repeat(3,1fr);
+  gap:5px;
 }
+
 .queue-row {
-  height:18px;
+  height:27px;
   display:grid;
-  grid-template-columns:14px 130px minmax(0,1fr) 48px;
-  gap:4px;
+  grid-template-columns:18px 155px minmax(0,1fr) 56px;
+  gap:5px;
   align-items:center;
-  padding:0 5px;
-  background:rgba(14,45,73,.55);
-  border:1px solid rgba(29,78,115,.55);
-  border-radius:3px;
+  padding:0 7px;
+  background:rgba(14,47,77,.7);
+  border:1px solid rgba(40,94,133,.65);
+  border-radius:4px;
 }
+
 .queue-pos {
-  font-size:7px;
+  font-size:9px;
   font-weight:950;
-  color:#55c8ff;
+  color:#57c9ff;
 }
+
 .queue-code {
-  font-size:8px;
+  font-size:11px;
   font-weight:950;
   color:#fff;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
+
 .queue-desc {
-  font-size:6.8px;
-  color:#b8d3e6;
+  font-size:8px;
+  color:#c3dcec;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
+
 .queue-qty {
   text-align:right;
-  font-size:8px;
+  font-size:11px;
   font-weight:950;
+  color:#fff;
 }
+
 .queue-empty {
   grid-column:1/-1;
   text-align:center;
-  font-size:6.7px;
-  color:#6f94ae;
+  font-size:8px;
+  color:#799cb6;
+  font-weight:700;
 }
 
-/* TVs menores */
+/* =========================================================
+   1366px / TV menor
+   ========================================================= */
 @media (max-width:1400px) {
   .saw-row {
-    grid-template-columns:132px 370px 305px minmax(0,1fr);
+    grid-template-columns:135px 355px 280px minmax(0,1fr);
   }
-  .current-code { font-size:16px; }
-  .queue-row { grid-template-columns:12px 110px minmax(0,1fr) 44px; }
-  .queue-code { font-size:7.3px; }
-  .queue-desc { font-size:6.2px; }
+  .saw-name { font-size:17px; }
+  .current-code { font-size:18px; }
+  .current-desc { font-size:8px; }
+  .queue-row {
+    grid-template-columns:16px 125px minmax(0,1fr) 50px;
+  }
+  .queue-code { font-size:9.5px; }
+  .queue-desc { font-size:7px; }
+  .hist-code { font-size:10px; }
 }
 </style>
 """
@@ -963,7 +992,7 @@ def machine_summary(machine: str, payload: dict, std_map: dict, now: datetime, p
     queue = payload.get("queue") or {}
     hist = history_today(payload.get("history") or [], prod_date)
     cur = current_order(queue)
-    nxt = next_queue(queue, cur, 4)
+    nxt = next_queue(queue, cur, 3)
 
     # Métrica do DIA: usada somente no resumo geral.
     day_metrics = execution_metrics(hist, machine, std_map, now)
@@ -1035,47 +1064,137 @@ def partial_rows_html(rows: list[dict]) -> str:
 
 
 
-def machine_history_html(rows: list[dict]) -> str:
-    finished = []
-    for r in rows or []:
+
+def completed_cut_groups(rows: list[dict]) -> list[dict]:
+    """
+    Agrupa execuções FINALIZADAS pela cadeia continuacao_de.
+
+    Exemplo:
+        30 pç (parcial)
+          ↓ continua
+        40 pç (parcial)
+          ↓ continua
+        25 pç (encerra/troca/conclui)
+
+    Histórico da TV:
+        TOTAL 95 pç
+
+    Uma cadeia que ainda possui execução ativa NÃO aparece como "último corte",
+    porque ainda não existe total definitivo daquele trecho.
+    """
+    rows = [dict(r) for r in (rows or [])]
+    by_id = {
+        str(r.get("id") or "").strip(): r
+        for r in rows
+        if str(r.get("id") or "").strip()
+    }
+
+    def root_id(row: dict) -> str:
+        current_id = str(row.get("id") or "").strip()
+        if not current_id:
+            # Fallback para histórico antigo sem id.
+            return (
+                f"NOID|{row.get('operacao_id')}|{row.get('codigo_item')}|"
+                f"{row.get('inicio_em')}|{row.get('op')}"
+            )
+
+        cursor = current_id
+        seen = set()
+        while cursor and cursor not in seen:
+            seen.add(cursor)
+            current = by_id.get(cursor)
+            if not current:
+                break
+            parent = str(current.get("continuacao_de") or "").strip()
+            if not parent or parent not in by_id:
+                return cursor
+            cursor = parent
+        return cursor or current_id
+
+    active_roots = set()
+    for r in rows:
+        if str(r.get("status") or "").upper() in {"EM_SETUP", "EM_PRODUCAO", "PAUSADA"}:
+            active_roots.add(root_id(r))
+
+    groups: dict[str, dict] = {}
+
+    for r in rows:
         if str(r.get("status") or "").upper() != "FINALIZADA":
             continue
-        dt = parse_ts(r.get("fim_em"))
-        if not dt:
-            continue
-        finished.append((dt, r))
 
-    finished.sort(key=lambda x: x[0], reverse=True)
-    finished = finished[:3]
+        end = parse_ts(r.get("fim_em"))
+        if not end:
+            continue
+
+        root = root_id(r)
+        g = groups.setdefault(
+            root,
+            {
+                "root": root,
+                "codigo_item": str(r.get("codigo_item") or "—"),
+                "op": str(r.get("op") or ""),
+                "total": 0.0,
+                "fim_em": end,
+                "rows": 0,
+            },
+        )
+
+        g["total"] += max(0.0, fnum(r.get("quantidade_boa")))
+        g["rows"] += 1
+
+        if end >= g["fim_em"]:
+            g["fim_em"] = end
+            g["codigo_item"] = str(r.get("codigo_item") or g["codigo_item"] or "—")
+            g["op"] = str(r.get("op") or g["op"] or "")
+
+    # Cadeia ainda ativa não é histórico concluído.
+    finished = [
+        g for root, g in groups.items()
+        if root not in active_roots and g["total"] > 0
+    ]
+    finished.sort(key=lambda g: g["fim_em"], reverse=True)
+    return finished
+
+
+def machine_history_html(rows: list[dict]) -> str:
+    cuts = completed_cut_groups(rows)[:2]
 
     out = []
-    for dt, r in finished:
-        code = str(r.get("codigo_item") or "—")
-        qty = fnum(r.get("quantidade_boa"))
+    for cut in cuts:
+        dt = cut["fim_em"]
+        code = str(cut.get("codigo_item") or "—")
+        total = fnum(cut.get("total"))
+
         out.append(
             "<div class='hist-row'>"
             f"<div class='hist-time'>{dt:%H:%M}</div>"
             f"<div class='hist-code' title='{esc(code)}'>{esc(code)}</div>"
-            f"<div class='hist-qty'>{fmt_qty(qty)} pç</div>"
+            "<div class='hist-total'>"
+            "<span>TOTAL</span>"
+            f"<b>{fmt_qty(total)} pç</b>"
+            "</div>"
             "</div>"
         )
 
-    while len(out) < 3:
+    while len(out) < 2:
         out.append(
             "<div class='hist-row'>"
-            "<div class='hist-empty'>SEM APONTAMENTO</div>"
+            "<div class='hist-empty'>SEM CORTE FINALIZADO</div>"
             "</div>"
         )
 
     return "<div class='history-list'>" + "".join(out) + "</div>"
 
 
+
 def compact_queue_html(rows: list[dict]) -> str:
     out = []
-    for i, x in enumerate((rows or [])[:4], 1):
+
+    for i, x in enumerate((rows or [])[:3], 1):
         code = str(x.get("item") or "—")
         desc = str(x.get("description") or "SEM DESCRIÇÃO")
         qty = max(0, fnum(x.get("planned_qty")) - fnum(x.get("done_qty")))
+
         out.append(
             "<div class='queue-row'>"
             f"<div class='queue-pos'>{i}</div>"
@@ -1085,7 +1204,7 @@ def compact_queue_html(rows: list[dict]) -> str:
             "</div>"
         )
 
-    while len(out) < 4:
+    while len(out) < 3:
         out.append(
             "<div class='queue-row'>"
             "<div class='queue-empty'>SEM PRÓXIMO ITEM</div>"
@@ -1093,6 +1212,7 @@ def compact_queue_html(rows: list[dict]) -> str:
         )
 
     return "<div class='queue-list'>" + "".join(out) + "</div>"
+
 
 
 def queue_strip_html(rows: list[dict]) -> str:
@@ -1222,7 +1342,7 @@ def machine_card(s: dict) -> str:
       <div class="history-box">
         <div class="box-head">
           <strong>ÚLTIMOS CORTES</strong>
-          <span>HORA · PEÇA · QTD</span>
+          <span>HORA FINAL · TOTAL</span>
         </div>
         {machine_history_html(s["history"])}
       </div>
@@ -1230,7 +1350,7 @@ def machine_card(s: dict) -> str:
       <div class="queue-box">
         <div class="box-head">
           <strong>PRÓXIMOS DA FILA</strong>
-          <span>1 → 4</span>
+          <span>1 → 3</span>
         </div>
         {compact_queue_html(s["next"])}
       </div>
@@ -1376,7 +1496,7 @@ header = f"""
   <div class="brand">IBERO<small>GROUP</small></div>
   <div class="title">
     <h1>APS SERRA <span>– MONITORAMENTO EM TEMPO REAL</span></h1>
-    <p>ITEM ATUAL • ÚLTIMOS CORTES • PRÓXIMOS DA FILA</p>
+    <p>ITEM ATUAL • ÚLTIMO CORTE TOTAL • FILA</p>
   </div>
   <div class="clock">
     <div class="date">{now:%d/%m/%Y}</div>
