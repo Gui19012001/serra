@@ -470,43 +470,38 @@ div[data-testid="stElementContainer"]:has(iframe) {
 .queue-row {
   height:34px;
   display:grid;
-  grid-template-columns:22px 175px minmax(0,1fr) 65px;
-  gap:6px;
+  grid-template-columns:24px minmax(0,1fr) 105px;
+  gap:8px;
   align-items:center;
-  padding:0 8px;
-  background:rgba(14,48,78,.74);
-  border:1px solid rgba(43,100,140,.70);
+  padding:0 10px;
+  background:rgba(14,48,78,.78);
+  border:1px solid rgba(43,100,140,.72);
   border-radius:5px;
 }
 
 .queue-pos {
-  font-size:11px;
+  font-size:12px;
   font-weight:950;
   color:#5dcdff;
+  text-align:center;
 }
 
 .queue-code {
-  font-size:14px;
+  font-size:17px;
   font-weight:950;
-  color:#fff;
+  color:#ffffff;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
+  letter-spacing:.15px;
 }
 
-.queue-desc {
-  font-size:9px;
-  color:#c9deec;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
 
 .queue-qty {
   text-align:right;
-  font-size:15px;
+  font-size:18px;
   font-weight:950;
-  color:#fff;
+  color:#ffffff;
 }
 
 .queue-empty {
@@ -527,11 +522,10 @@ div[data-testid="stElementContainer"]:has(iframe) {
   .current-desc { font-size:8px; }
   .current-bottom { grid-template-columns:1fr 190px; }
   .queue-row {
-    grid-template-columns:20px 140px minmax(0,1fr) 56px;
+    grid-template-columns:22px minmax(0,1fr) 90px;
   }
-  .queue-code { font-size:12px; }
-  .queue-desc { font-size:8px; }
-  .queue-qty { font-size:13px; }
+  .queue-code { font-size:15px; }
+  .queue-qty { font-size:16px; }
   .lastcut-code { font-size:14px; }
   .lastcut-total { font-size:18px; }
 }
@@ -1206,15 +1200,15 @@ def compact_queue_html(rows: list[dict]) -> str:
 
     for i, x in enumerate((rows or [])[:2], 1):
         code = str(x.get("item") or "—")
-        desc = str(x.get("description") or "SEM DESCRIÇÃO")
-        qty = max(0, fnum(x.get("planned_qty")) - fnum(x.get("done_qty")))
+
+        # TOTAL PLANEJADO da operação, não saldo.
+        planned = max(0, fnum(x.get("planned_qty")))
 
         out.append(
             "<div class='queue-row'>"
             f"<div class='queue-pos'>{i}</div>"
             f"<div class='queue-code' title='{esc(code)}'>{esc(code)}</div>"
-            f"<div class='queue-desc' title='{esc(desc)}'>{esc(desc)}</div>"
-            f"<div class='queue-qty'>{fmt_qty(qty)}</div>"
+            f"<div class='queue-qty'>{fmt_qty(planned)}</div>"
             "</div>"
         )
 
@@ -1362,7 +1356,7 @@ def machine_card(s: dict) -> str:
       <div class="queue-box">
         <div class="queue-title">
           <strong>PRÓXIMOS DA FILA</strong>
-          <span>1 → 2</span>
+          <span>CÓDIGO · TOTAL PLANEJADO</span>
         </div>
         {compact_queue_html(s["next"])}
       </div>
@@ -1508,7 +1502,7 @@ header = f"""
   <div class="brand">IBERO<small>GROUP</small></div>
   <div class="title">
     <h1>APS SERRA <span>– MONITORAMENTO EM TEMPO REAL</span></h1>
-    <p>ITEM ATUAL • ÚLTIMO CORTE • PRÓXIMOS</p>
+    <p>ITEM ATUAL • ÚLTIMO CORTE • FILA DE PRODUÇÃO</p>
   </div>
   <div class="clock">
     <div class="date">{now:%d/%m/%Y}</div>
