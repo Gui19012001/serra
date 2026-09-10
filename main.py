@@ -195,9 +195,9 @@ div[data-testid="stElementContainer"]:has(iframe) {
 }
 
 .saw-row {
-  height:108px;
+  height:124px;
   display:grid;
-  grid-template-columns:140px 500px 220px minmax(0,1fr);
+  grid-template-columns:140px 540px 205px minmax(0,1fr);
   background:linear-gradient(90deg,rgba(11,38,63,.99),rgba(8,30,51,.99));
   border:1px solid var(--line);
   border-radius:8px;
@@ -256,15 +256,15 @@ div[data-testid="stElementContainer"]:has(iframe) {
    ITEM ATUAL
    ========================================================= */
 .current-box {
-  padding:7px 12px 6px;
+  padding:8px 13px 7px;
   border-right:1px solid var(--line-soft);
   overflow:hidden;
 }
 
 .current-main {
   display:grid;
-  grid-template-columns:minmax(0,1fr) 72px;
-  gap:10px;
+  grid-template-columns:minmax(0,1fr) 70px;
+  gap:11px;
 }
 
 .label {
@@ -276,7 +276,7 @@ div[data-testid="stElementContainer"]:has(iframe) {
 }
 
 .current-code {
-  font-size:25px;
+  font-size:26px;
   font-weight:950;
   line-height:1;
   margin-top:2px;
@@ -286,15 +286,17 @@ div[data-testid="stElementContainer"]:has(iframe) {
 }
 
 .current-desc {
-  font-size:8px;
-  font-weight:650;
-  line-height:1.05;
-  color:#d8e8f3;
-  margin-top:3px;
-  height:15px;
+  font-size:11px;
+  font-weight:750;
+  line-height:1.16;
+  color:#eef7fd;
+  margin-top:6px;
+  height:27px;
+  max-height:27px;
   overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
+  white-space:normal;
+  text-overflow:clip;
+  letter-spacing:.05px;
 }
 
 .current-time {
@@ -309,7 +311,7 @@ div[data-testid="stElementContainer"]:has(iframe) {
 
 .origin {
   display:inline-block;
-  margin-top:1px;
+  margin-top:3px;
   font-size:6.5px;
   font-weight:950;
   color:var(--yellow);
@@ -340,13 +342,13 @@ div[data-testid="stElementContainer"]:has(iframe) {
 .current-metrics {
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:6px;
-  margin-top:5px;
+  gap:7px;
+  margin-top:6px;
 }
 
 .metric {
-  background:rgba(15,49,80,.82);
-  border:1px solid rgba(52,111,151,.62);
+  background:rgba(15,49,80,.86);
+  border:1px solid rgba(61,126,169,.68);
   border-radius:5px;
   padding:5px 8px;
   display:flex;
@@ -356,13 +358,13 @@ div[data-testid="stElementContainer"]:has(iframe) {
 }
 .metric span {
   display:block;
-  font-size:7px;
-  color:#8ebbd8;
-  font-weight:850;
+  font-size:7.5px;
+  color:#9bc7e3;
+  font-weight:900;
 }
 .metric b {
   display:block;
-  font-size:17px;
+  font-size:18px;
   font-weight:950;
   line-height:1;
   margin-top:0;
@@ -373,7 +375,7 @@ div[data-testid="stElementContainer"]:has(iframe) {
    ÚLTIMO CORTE - UM ÚNICO REGISTRO GRANDE
    ========================================================= */
 .lastcut-box {
-  padding:7px 8px;
+  padding:7px 7px;
   border-right:1px solid var(--line-soft);
   display:flex;
   flex-direction:column;
@@ -522,11 +524,11 @@ div[data-testid="stElementContainer"]:has(iframe) {
 /* 1366px */
 @media (max-width:1400px) {
   .saw-row {
-    grid-template-columns:132px 455px 205px minmax(0,1fr);
+    grid-template-columns:132px 490px 190px minmax(0,1fr);
   }
   .saw-name { font-size:17px; }
-  .current-code { font-size:22px; }
-  .current-desc { font-size:7.5px; }
+  .current-code { font-size:23px; }
+  .current-desc { font-size:10px; }
   .queue-code { font-size:16px; }
   .queue-qty { font-size:17px; }
   .lastcut-code { font-size:12px; }
@@ -1506,7 +1508,7 @@ header = f"""
   <div class="brand">IBERO<small>GROUP</small></div>
   <div class="title">
     <h1>APS SERRA <span>– MONITORAMENTO EM TEMPO REAL</span></h1>
-    <p>ITEM ATUAL • ÚLTIMO CORTE • FILA DE PRODUÇÃO</p>
+    <p>ITEM ATUAL • PRODUÇÃO • ÚLTIMO CORTE • FILA</p>
   </div>
   <div class="clock">
     <div class="date">{now:%d/%m/%Y}</div>
